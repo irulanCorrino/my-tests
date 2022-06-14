@@ -1,0 +1,60 @@
+kturtle-script-v1.0
+#_a_learning_test_to_check_a_reference_locality_
+#
+#_a_syntax_of_a_language_force_thou_to_declare_
+#_variables_outside_a_function_see_
+@(learn) test $mockingBird@(,) $penguin@(,) $counter@(,) $chilliSentencee@(,) $guess {
+#   $penguin = " singer " it is wrong exception will be
+#             not raised value will be empty (see_below*)
+   $number = 0
+   @(forward) 10
+   @(print) $chilliSentencee
+   @(if) $counter { $number = $number + 1 }
+   $guess = $number
+   @(if) $counter { $chilliSentencee = $penguin }
+   @(if) @(not) $number {
+    $chilliSentencee = $mockingBird + $chilliSentencee
+    }
+    @(else) {
+#_next_string_is_local_it_will_be_evaluated_outside_this_call_*only*_
+     $chilliSentencee = $penguin
+     @(forward) 20
+     @(message) " what is it chilli willy "
+     @(forward) 10
+#_and_this_kind_of_reference_calls_to_$variable_*_with_*old_value*_
+#    print ( $mockingBird + "and" + $chilliSentencee + "are " + $number )
+     }
+   }
+#
+#an_interface
+$counter = @(false)
+$guess = 0
+$penguin = " singer "
+#$penguin = "" default value --to raise an exception not
+$chilliSentencee = $penguin
+@(reset)
+@(go) 10@(,) 300
+@(penup)
+@(message) " here is a mocking bird be aware please "
+$mockingBird = " #scratchie * * * "
+@(print) $mockingBird
+#
+@(message) " here chilli willy did appeared yet "
+@(forward) 20
+test $mockingBird@(,) $penguin@(,) $counter@(,) $chilliSentencee@(,) $guess
+#
+@(forward) 10
+@(message) " now they did putted their bags together say it penguin please "
+@(forward) 20
+@(print) $chilliSentencee
+@(forward) 20
+#
+@(wait) 1
+$counter = @(true) 
+test $mockingBird@(,) $penguin@(,) $counter@(,) $chilliSentencee@(,) $guess
+# print $number a mistake --it is a local variable
+@(forward) 10
+@(print) ( $mockingBird + "and" + $chilliSentencee + "are " + $guess )
+@(forward) 20
+@(print) $chilliSentencee
+@(spritehide)
