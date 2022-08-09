@@ -1,4 +1,4 @@
-#### it is not ready to run yet just a preview [ver-2.0.2]
+#### it is not ready to run yet just a preview [ver-2.1]
 >```
 >#_inheritance 2.1 [corrected version of 1.0]
 >#to implement more parameters smoe changes would be needed --irulan
