@@ -1,9 +1,10 @@
 ###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders [i cannot use branching as of yet so i use separate folders for versions that have big number bumps]
-#### _inheritance-2-0
+#### _inheritance-2-1
 
 >```
->#_inheritance 2.0 [corrected version of 1.0]
+>#_inheritance 2.1 [corrected version of 1.0]
 >#to implement more parameters smoe changes would be needed --irulan
+>$v0 = 0
 >$v1 = 0
 >$v2 = 0
 >$v3 = 0
@@ -67,7 +68,6 @@
 >$v61 = 0
 >$v62 = 0
 >$v63 = 0
->$v64 = 0
 >#_inheritance
 >$precedence = 0
 >$foreScripted = false
@@ -81,238 +81,187 @@
 >$fork = 0
 >$appearance = false
 >$sanity = false
->$first = true
+>$first = true # capitalisation rule triggering flag
 >$limit = 0
->$spin = 0
->$hold = false
+>$spinG = 0
+>$hold = false #maybe int
 >$identifier = 0
 >$pointMe = 0
->learn checkHeirloom $name, $precedence, $sanity, $limit, $foreScripted, $afterScripted {#to_eliminate_ambiguity
+>$editMode = 0 #maybe int (in‑place & explicit editing)
+>learn checkHeirloom $spin, $name, $precedence, $sanity, $limit, $foreScripted, $afterScripted {#to_eliminate_ambiguity
 >     if $name == 0 {
->      if $precedence < 5 {
->        $precedence = $precedence + 1
-># if ($precedence == 4) or ($precedence == 5) { $cluster = true }, $cluster
->        }
-># return $precedence
+>      if $precedence == 4 and ($foreScripted or $afterScripted) {# what are control characters in edit mode? how to exit it?
+>       if $foreScripted {
+>#       $hold = true #insufficient flag was maybe .$spin is required
+>       $foreScripted = false
+>       $precedence = 0
+>       }
+>       else {
+>         if $afterScripted {
+>          $afterScripted = false
+>          $precedence = 0
+>          }
+>         }# |* poor style oh --irulan (moved between functions) *|
+>       }
+>       else {
+>         if $precedence < 3 { $precedence = $precedence + 1 }
+>         }
 >      }
 >      else {
->        if $precedence == 3 or $precedence == 4 or $precedence == 5 {
->         if $name == 8 {
->          if checkSpin true, 3 {
->           $sanity = false
->           $limit = 3
->           $name = 0
->           $precedence = 0
->           $subScripted = true
->           }
->           else { $limit = 3 - checkSpin false, 3 }#to check reaction to an overflow --irulan
->          }
+>        if not $limit and not $sanity {# to switch $sanity at some point
+>         if $superScripted { $superScripted = false }
 >          else {
->            if checkSpin true, 1 {
->             $sanity = false
->             $limit = 3
->             $precedence = 0
->             $superScripted = true
->             }
->             else { $limit = 3 - checkSpin false, 1 }
->            }
->         }#poor style oh .now fixing --irulan (moved between functions)#
->        if not $sanity {
->         $sanity = true
->         if $first { $first = false }
->         if $hold { $hold = false }
->         }
->        if not $limit {
->         if $foreScripted { $foreScripted = false }
->          else {
->            if $afterScripted { $afterScripted = false }
+>            if $subScripted { $subScripted = false }
 >            }
 >         }
->         else { $limit = $limit - 1 }#maybe additional thing is needed for safety
+>         else { $limit = $limit - 1 }# maybe additional thing is needed for safety
 >        }
 >     }
 >#
->#learn inheritedProperties $precedence, $foreScripted, $afterScripted, $superScripted, $subScripted, $space, $newline, $fork, $appearance {}
->#
->#learn clusterInheritance $pattern, $precedence {}
->#
->learn requestOfInheritance $name, $foreScripted, $afterScripted, $superScripted, $subScripted, $space, $newline, $precedence, $fork, $appearance, $sanity, $first, $limit {
-># 
-># if not $editLineMode and $name and $bundleLenght {# { $editMode = true } if if 
-># }
->#
->     if not $name {#0 and not
->        if $precedence == 1 and not $foreScripted and not $afterScripted { $space = true }
+>learn requestOfInheritance $spin, $name, $foreScripted, $afterScripted, $superScripted, $subScripted, $space, $newline, $precedence, $fork, $appearance, $sanity, $first, $limit {
+>     if not $name {#0
+>        if $precedence == 1 {# how to exit edit mode?
+>         $space = true
+>         #$first = true# conditionally
+>         }
 >         else {#1
 >           if $precedence == 2 {
->            if $foreScripted {
->             $hold = true#insufficient flag was maybe .$spin is required
->             $foreScripted = false
->             $precedence = 0
->             }
->             else {
->               if $afterScripted {
->                $afterScripted = false
->                $precedence = 0
->                }
->                else {
->                  $newline = true
->                  $space = false
->                  #$first = true
->                  }
->               }
+>            $newline = true
+>            $space = false
+>            #$first = true
 >            }
 >            else {#2
->               if $precedence == 3 { $foreScripted = true }#
->                else {#3
->                  if $precedence == 4 { $space = true }
->                   else {#4
->                     if $precedence == 5 {
->                      $space = false
->                      $newline = true
+>               if $precedence == 3 {#
+>                $internalName = subcaller 0
+>                if $internalName == 24 {
+>                 $cursorAction = cursor_stuff 0
+>                 while $cursorAction {
+>                      
+>                      $cursorAction = cursor_stuff 0
 >                      }
->                      else {#5
->                        if $precedence == 6 {#$foreScripted == true seemed_to_be_bad
->                         if not $first and not $hold {
->                          $foreScripted = false
->                          $precedence = 0
->                          $newline = false
->                          $internalName = subcaller true
->                          if $internalName == 20 {
->                           $superScripted = true
->                           if checkSpin true, 5 {
->                            $limit = 3
->                            $sanity = false
->                            }
->                            else { $limit = 3 - checkSpin false, 5 }
->                           $afterScripted = true
->                           }#20_--jera
->                           else {
->                             if $internalName == 8 {
->                              $subScripted = true
->                              if checkSpin true, 7 {
->                               $limit = 3
->                               $sanity = false
->                               }
->                               else { $limit = 3 - checkSpin false, 7 }
->                              $afterScripted = true
->                              }#8_--algiz
->                              else {#--termination was; ugh .now is required; will refuse to go at first
->                                if $internalName == 0 { $editMode = true }
->                                 else {
->                                   $appearanceL = $appearance
->                                   $forkL = $fork
->                                   while $internalName {
->                                        if $internalName == 6 {
->                                         $appearanceL = not $appearanceL
->                                         }#6_--othila
->                                         else {
->                                           if $internalName == 16 {
->                                            $forkL = $forkL + 1
->                                            if $forkL == 4 { $forkL = 0 }
->                                            }#16_--fehu
->                                           }
->                                        #do not forget to make a call to drawing function; beware of global variables
->                                        $internalName = subcaller false
->                                        }
->                                   $appearance = $appearanceL
->                                   $fork = $forkL
->                                   return 5
->                                   }
->                               }
->                             }
->                          }
->                         }
->                         else {#6and $afterScripted 
->                           if $precedence == 1 and ($foreScripted or $afterScripted) {#*
->                            $internalName = subcaller true#
->                            $precedence = 0
->                            if $internalName == 20 {
->                             $superScripted = true
->                             if $foreScripted {
->                              if checkSpin true, 1 {
->                               $sanity = false
->                               $limit = 3
->                               }
->                               else { $limit = 3 - checkSpin false, 1 }
->                              }
->                              else {
->                                if checkSpin true, 5 {
->                                 $sanity = false
->                                 $limit = 3
->                                 }
->                                 else { $limit = 3 - checkSpin false, 5 }
+>                 $precedenceL = 1
+>                 $cursorAction = cursor_stuff 1
+>                 if $cursorAction {
+>                  $precedenceL = 0
+>                  while $cursorAction {
+>                       
+>                       $cursorAction = cursor_stuff 1
+>                       }
+>                  }
+>                  else {
+>                    }
+>                 
+>                 
+>                 if $sanity {
+>                  }
+>                  else {
+>                    }
+>#                $cursorShift = checkSpin $spinG, false, 1 + checkSpin $spinG, false, 3 + checkSpin $spinG, false, 5 + checkSpin $spinG, false, 7
+># cursor stuff $cursor = shiftLeftExplicit (checkSpin $spinG, false, 1), 1 + shiftLeftExplicit (checkSpin $spinG, false, 3), 3 + shiftLeftExplicit (checkSpin $spinG, false, 5), 5 + shiftLeftExplicit (checkSpin $spinG, false, 7), 7
+>                 }#24_--hagala
+>                 else {#a
+>                   if $internalName == 16 {#b
+>                    $foreScriptedL = $foreScripted
+>                    $afterScriptedL = $afterScripted
+>                    $superScriptedL = $superScripted
+>                    $subScriptedL = $subScripted
+>                    $appearanceL = $appearance
+>                    $forkL = $fork
+>                    while ($internalName and not (($superScriptedL or $subScriptedL) and ($foreScriptedL or $afterScriptedL))) {#c
+>                         $internalName = subcaller 1
+>                         #
+>                         if $internalName == 15 {
+>                          $foreScriptedL = true
+>                          if $afterScriptedL { $afterScriptedL = false }
+>#
+>                          }#15_--raidho
+>                          else {#d
+>                            if $internalName == 4 {
+>                             $afterScriptedL = true
+>                             if $foreScriptedL { $foreScriptedL = false }
+>#
+>                             }#4_--teiwaz
+>                            else {#e
+>                              if $internalName == 20 {
+>                               $superScriptedL = true
+>                               if checkSpin $spin, true, 5 {
+>                                $limit = 3
+>                                $sanity = false
 >                                }
->                             }#20_--jera
->                             else {
->                               if $internalName == 8 {
->                                $subScripted = true
->                                if $foreScripted {
->                                 if checkSpin true, 3 {
->                                  $sanity = false
->                                  $limit = 3
->                                  }
->                                  else { $limit = 3 - checkSpin false, 3 }
->                                 }
->                                 else {
->                                   if checkSpin true, 7 {
->                                    $sanity = false
->                                    $limit = 3
->                                    }
->                                    else { $limit = 3 - checkSpin false, 7 }
+>                                else { $limit = 3 - checkSpin $spin, false, 5 }
+>                               }#20_--jera
+>                               else {#f
+>                                 if $internalName == 8 {
+>                                  $subScriptedL = true
+>                                  if checkSpin $spin, true, 7 {
+>                                   $limit = 3
+>                                   $sanity = false
 >                                   }
->                                }#8_--algiz and $afterScripted
->                                else {#()not $precedence == 1or
->                                  if $sanity {#* i guess is wrong or insufficient; fixed --irulan
->                                   $appearanceL = $appearance
->                                   $forkL = $fork
->                                   while $internalName {
->                                        if $internalName == 6 {
->                                         $appearanceL = not $appearanceL
->                                         }#6_--othila
->                                         else {
->                                           if $internalName == 16 {
->                                            $forkL = $forkL + 1
->                                            if $forkL == 4 { $forkL = 0 }
->                                            }#16_--fehu
+>                                   else { $limit = 3 - checkSpin $spin, false, 7 }
+>                                  }#8_--algiz
+>                                 else {#g
+>                                   if $internalName == 0 {
+>                                    $editMode = 1
+>                                    $precedence == 4
+>                                    }
+>                                    else {#h
+>                                      while $internalName {
+>                                           if $internalName == 6 {
+>                                            $appearanceL = not $appearanceL
+>                                            }#6_--othila
+>                                            else {
+>                                              if $internalName == 16 {
+>                                               $forkL = $forkL + 1
+>                                               if $forkL == 4 { $forkL = 0 }
+>                                               }#16_--fehu
+>                                              }
+>                                            #do not forget to make a call to drawing function; beware of global variables
+>                                            $internalName = subcaller 2
 >                                           }
->                                        }
->                                        $internalName = subcaller false
->                                          #do not forget to make a call to drawing function; beware of global variables |* and i missed $spin in checkSpin back then... oh --irulan [learn checkSpin [$spin,[?]] $reason, $address {}] *|
->                                   $appearance = $appearanceL
->                                   $fork = $forkL
->                                   return 6
->                                   }#
->                                  }#
->                               }
->                            }
->                           }#6
->                        }#5
->                     }#4
->                  }#3
+>                                      }#h
+>                                   }#g
+>                                 }#f
+>                              }#e
+>                            }#d
+>                         }#c
+>                    $foreScripted = $foreScriptedL
+>                    $afterScripted = $afterScriptedL
+>                    $superScripted = $superScriptedL
+>                    $subScripted = $subScriptedL
+>                    $appearance = $appearanceL
+>                    $fork = $forkL
+>                    }#16_--fehu b
+>                    else {
+>                      if $internalName == 0 {
+>                      $editMode = 1
+>                      $precedence == 4
+>                      }
+>                   }#a
+>                }#
+>              #return 5
 >              }#2
 >           }#1
 >        return 0
 >        }#0_--empty
->        else {#or ) andand ((or)
+>        else {# |* $name exists *|
 >          if $foreScripted {
 >           if $superScripted {
->            if checkSpin true, 1 {
->             $spin = $spin + shiftLeftExplicit (3 - $limit), 1
+>            if checkSpin $spin, true, 1 {
+>             $spinG = $spin + shiftLeftExplicit (3 - $limit), 1
 >             return 1
 >             }
 >             else {
->               $spin = $spin - shiftLeftExplicit (checkSpin false, 1), 1 + shiftLeftExplicit (3 - $limit), 1
+>               $spinG = $spin - shiftLeftExplicit (checkSpin $spin, false, 1), 1 + shiftLeftExplicit (3 - $limit), 1
 >               return 3
 >               }
 >            }
 >           if $subScripted {
->            if checkSpin true, 3 {
->             $spin = $spin + shiftLeftExplicit (3 - $limit), 3
+>            if checkSpin $spin, true, 3 {
+>             $spinG = $spin + shiftLeftExplicit (3 - $limit), 3
 >             return 1
 >             }
 >             else {
->               $spin = $spin - shiftLeftExplicit (checkSpin false, 3), 3 + shiftLeftExplicit (3 - $limit), 3
+>               $spinG = $spin - shiftLeftExplicit (checkSpin $spin, false, 3), 3 + shiftLeftExplicit (3 - $limit), 3
 >               return 3
 >               }
 >            }
@@ -320,28 +269,28 @@
 >           else {
 >             if $afterScripted {
 >              if $superScripted {
->               if checkSpin true, 5 {
->                $spin = $spin + shiftLeftExplicit (3 - $limit), 5
+>               if checkSpin $spin, true, 5 {
+>                $spinG = $spin + shiftLeftExplicit (3 - $limit), 5
 >                return 2
 >                }
 >                else {
->                  $spin = $spin - shiftLeftExplicit (checkSpin false, 5), 5 + shiftLeftExplicit (3 - $limit), 5
+>                  $spinG = $spin - shiftLeftExplicit (checkSpin $spin, false, 5), 5 + shiftLeftExplicit (3 - $limit), 5
 >                  return 4
 >                  }
 >               }
 >              if $subScripted {
->               if checkSpin true, 7 {
->                $spin = $spin + shiftLeftExplicit (3 - $limit), 7
+>               if checkSpin $spin, true, 7 {
+>                $spinG = $spin + shiftLeftExplicit (3 - $limit), 7
 >                return 2
 >                }
 >                else {
->                  $spin = $spin - shiftLeftExplicit (checkSpin false, 7), 7 + shiftLeftExplicit (3 - $limit), 7
+>                  $spinG = $spin - shiftLeftExplicit (checkSpin $spin, false, 7), 7 + shiftLeftExplicit (3 - $limit), 7
 >                  return 4
 >                  }
 >               }
 >              }
 >              else {
->                 $spin = 1 + shiftLeftExplicit $name, 1 + shiftLeftExplicit $identifier, 8
+>                 $spinG = 1 + shiftLeftExplicit $name, 1 + shiftLeftExplicit $identifier, 9
 >                }
 >             }
 >          }
@@ -354,9 +303,14 @@
 ># if $name == 16 and $newline == true { $fork = $fork + 1 }##16_--fehu*
 >#*_--a_new_call_is_so_far_a_$name_--irulan
 >     }
->learn subcaller $locus {
->     if $locus { return ask "input a special number(20or8) for locus" }
->     return ask "input a special number(6or16)"
+>learn subcaller $reason {
+>     if not $reason { return ask "input: 24 –select a cluster;  16 –select loci; 0 –edit mode" }
+>      else {
+>         if $reason == 1 { return ask "input a special number(15or4) or a special number(20or8) for setting a locus; or input 6 for setting an appearance or 16 for doing a transform; 0 –edit mode; 00 –exit a cluster" }
+>          else {
+>            return ask "input 6 for setting an appearance or 16 for doing a transform; 0 –exit transform mode"
+>            }
+>        }
 >     }
 >learn check_last $foreScripted, $superScripted {#, $subScripted
 >     if $foreScripted {
@@ -365,21 +319,34 @@
 >      }
 >      else { return 0 }
 >     }
->learn checkSpin $reason, $address {
+>learn checkSpin $spin, $reason, $address {
 >     if $reason {
 >      if wrapperSR $spin, $address, 2 { return false }
 >       else { return true }
 >      }
 >      else { return wrapperSR $spin, $address, 2 }
 >     }
->learn find_shift {
->     return checkSpin false, 1 + checkSpin false, 3
+>learn find_shift $spin {
+>     return checkSpin $spin, false, 1 + checkSpin $spin, false, 3
 >     }
->#
+>learn cursor_stuff $reason {
+>     if not $reason { return ask "input: 16 –set a cursor at a line; 24 –set a cursor at a cluster; 0 –stop switching through clusters; 00 –exit cursor moving mode" }
+>      else {
+>         if $reason == 1 { return ask "input (20or8) for moving a cursor [line mode: up or down; clusters: left or right]; 0 –stop switching through clusters; 00 –exit cursor moving mode" }#00 –for insert mode triggering
+>          else {
+>            if $reason == 2 { return ask "input a special [fore‑/after‑] number(15or4) or a special [super‑/sub‑] number(20or8) for setting a locus" }
+>            else { return ask "for selecting minor member: 20 –left or 8 –right; 0 –exit a cluster’s minor member; 00 –exit cursor moving mode" }#to keep the sane limit here (no inserts above that)
+>            }
+>         }
+>     }
+>#a cursor moving wraps on a line; no inserts for big cluster members —only a replacement is allowed; $antiligatur switch!!! $hold? ****
+># 0 is acceptable once # 0 is acceptable twice
 >#learn inheritedLogic $name, $precedence, $space, $newline, $cluster, $pattern, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance {}
 >#
 >#_renga_
 >learn linkIt $flow, $variable {
+>if $flow == 0 { $v0 = $variable }
+>else {
 >if $flow == 1 { $v1 = $variable }
 >else {
 > if $flow == 2 { $v2 = $variable }
@@ -505,9 +472,7 @@
 > if $flow == 62 { $v62 = $variable }
 >else {
 > if $flow == 63 { $v63 = $variable }
->else {
-> if $flow == 64 { $v64 = $variable }
->  }
+> }
 >}
 >}
 >}
@@ -576,7 +541,7 @@
 >learn glacierMirror $flow, $entity {#_*r |* [*renga]? *|
 >      linkIt $flow, $entity
 >      $flow = $flow + 1
->     if $flow == 63 { message "memory is low" }
+>     if $flow == 62 { message "memory is low" }
 >     }
 >learn wrapperSR $value, $address, $dLenght {
 >     if $value {
@@ -586,7 +551,7 @@
 >      $result = $firstOperand - $secondOperand * (2 ^ $dLenght)
 >      return $result
 >      }
->      else { return $value }
+>      else { return 0 }
 >     }
 >learn shiftRightExplicit $value, $address {
 >     $c = $value
@@ -597,7 +562,7 @@
 >           }
 >     return $c
 >     }
->#learn containerSR { # |* this stuff uses globals so it will not work in a practical application --irulan *|
+>#learn containerSR { # |* this stuff uses globals so it will not work in a practical application --irulan *| no no the stuff is not using globals [was disappointed by other things really abusing globals (checkSpin)]
 ># $value = 11264
 ># $address = 10
 ># $dLenght = 2
@@ -609,7 +574,7 @@
 ># $dLenght = 2
 ># return wrapperSR $value, $address, $dLenght
 ># }
->##_SRCouner_function |* [sic] *|
+>##_SRCounter_function
 >learn shiftRight $value, $power {
 >       $c = 1
 >       $d = $value
@@ -652,7 +617,9 @@
 >#2_--1____&&_--3
 >#1_--0____&&_--1
 >#_0_--null
->learn leadMe $flow {#that could be done more transparently |* oh... did i mean back then that 'if $condition {}' used as 'switch $condition {case here}' is better than nested stuff 'if $condition {} else {if $condition {}else {if $condition {}}}'? --irulan*|
+>learn leadMe $flow {#that could be done more transparently |* oh... did i mean back then that 'if $condition {}' used as 'switch $condition {case here}' is better than nested stuff 'if $condition {} else {if $condition {}else {if $condition {}}}'? --irulan *|
+>if $flow == 0 { return $v0 }
+>else {
 >if $flow == 1 { return $v1 }
 >else {
 > if $flow == 2 { return $v2 }
@@ -778,9 +745,7 @@
 > if $flow == 62 { return $v62 }
 >else {
 > if $flow == 63 { return $v63 }
->else {
-> if $flow == 64 { return $v64 }
->  }
+> }
 >}
 >}
 >}
@@ -845,11 +810,6 @@
 >}
 >}
 >     }
->
->
->
->
->
 >learn void_test {
 >     clear
 >     center
@@ -860,37 +820,37 @@
 >     forward 10
 >     if $foreScripted {
 >        direction 0
->        print "foreScripted is equal to " + $foreScripted
+>        print "foreScripted is equal to true"
 >        direction 180
 >        forward 10
 >        }
 >     if $afterScripted {
 >        direction 0
->        print "afterScripted is equal to " + $afterScripted
+>        print "afterScripted is equal to true"
 >        direction 180
 >        forward 10
 >        }
 >     if $superScripted {
 >        direction 0
->        print "superScripted is equal to " + $superScripted
+>        print "superScripted is equal to true"
 >        direction 180
 >        forward 10
 >        }
 >     if $subScripted {
 >        direction 0
->        print "subScripted is equal to " + $subScripted
+>        print "subScripted is equal to true"
 >        direction 180
 >        forward 10
 >        }
 >     if $space {
 >        direction 0
->        print "space is equal to " + $space
+>        print "space is equal to true"
 >        direction 180
 >        forward 10
 >        }
 >     if $newline {
 >        direction 0
->        print "newline is equal to " + $newline
+>        print "newline is equal to true"
 >        direction 180
 >        forward 10
 >        }
@@ -906,40 +866,76 @@
 >        direction 180
 >        forward 10
 >        }
+>     if $hold {
+>        direction 0
+>        print "$hold is equal to true"
+>        direction 180
+>        forward 10
+>        }
+>     if $editMode {
+>        direction 0
+>        print "editMode is equal to true"
+>        direction 180
+>        forward 10
+>        }
+>     direction 0
+>     print "first is equal to " + $first
+>     direction 180
+>     forward 10
+>     direction 0
+>     print "limit is equal to " + $limit
+>     direction 180
+>     forward 10
+>     direction 0
+>     print "sanity is equal to " + $sanity
 ># if $cluster {
 ># direction 0
 ># print "cluster is equal to " + $cluster
 ># direction 180
 ># forward 10
 ># }
->     direction 0
 >     if $name {
+>        direction 180
+>        forward 10
+>        direction 0
 >        if $appearance { print "entity is mirrored" }
 >         else { print "default appearance" }
+>        direction 180
+>        forward 10
 >        }
+>     center
+>     direction 180
+>     forward 20
+>     test_spinG spinG, $identifier
 >     }
 >#
 >#_test
 >reset
+>fontsize 10
 >spritehide
 >penup
 >$condition = true
->$flow = 1
+>$flow = 0
 >$input = ""
 >$name = 0#difference($flow - 1)
->while ($condition == true ) {
->     if not ($flow == 64) {
->      $name = ask "input number in range from 0 to 24"
->      checkHeirloom $name, $precedence, $sanity, $limit, $foreScripted, $afterScripted#, $cluster
->      $action = requestOfInheritance $name, $foreScripted, $afterScripted, $superScripted, $subScripted, $space, $newline, $precedence, $fork, $appearance, $sanity, $first, $limit
+>while ($condition == true) {
+>     if $flow != 64 {
+>      $ask = -1
+>      while $ask == -1 {
+>           $ask = ask "input number in range from 0 to 24"
+>           if not ($ask >=0 and $ask <= 24) { $ask = -1 }
+>            else { $name = $ask }
+>           }
+>      checkHeirloom $spinG, $name, $precedence, $sanity, $limit, $foreScripted, $afterScripted#, $cluster
+>      $action = requestOfInheritance $spinG, $name, $foreScripted, $afterScripted, $superScripted, $subScripted, $space, $newline, $precedence, $fork, $appearance, $sanity, $first, $limit
 >      if $action { 
->       if $action == 1 { glacierMirror $flow, $spin }
+>       if $action == 1 { glacierMirror $flow, $spinG }
 >        else {
 >          if $action == 2 {
 >           $swap = $flow
 >           $nameSwap = leadMe $flow
->           $flow = $flow - 1
->           linkIt $flow, $spin
+>           $flow = $flow - checkSpin $spinG, false, 1 - checkSpin $spinG, false, 3 - checkSpin $spinG, false, 5 - checkSpin $spinG, false, 7 #dumb misdirection
+>           linkIt $flow, $spinG
 >           $flow = $swap
 >           glacierMirror $flow, $nameSwap
 >           }
@@ -958,7 +954,7 @@
 >                   }
 >                }
 >
->find_shift
+>find_shift $spinG
 >             }
 >          }
 >       }
@@ -966,9 +962,6 @@
 >      void_test
 >      $input = ask "to stop say 'stop'"
 >      if $input == "stop" { $condition = false }
->#bw 12
->#print $condition
->
 >      }
 >      else {
 >        message "overflow"
@@ -978,5 +971,178 @@
 >     }
 >spriteshow
 >exit
+>
+>(checkSpin $spinG, true, 1 and checkSpin $spinG, true, 3 and checkSpin $spinG, true, 5 and checkSpin $spinG, true, 7)
+>
+>$cursor = shiftLeftExplicit (checkSpin $spinG, false, 1), 1 + shiftLeftExplicit (checkSpin $spinG, false, 3), 3 + shiftLeftExplicit (checkSpin $spinG, false, 5), 5 + shiftLeftExplicit (checkSpin $spinG, false, 7), 7
+>
+>$cursorShift = checkSpin $spinG, false, 1 + checkSpin $spinG, false, 3 + checkSpin $spinG, false, 5 + checkSpin $spinG, false, 7
+>
+>to get it properly pointed to big member position while it is placed at small cluster members’ loci visually
+>*to remember six points:
+>                       $beforeUnknown
+>                       $inputPenult
+>                       $inputAfterEdit
+>                       $editedFirst
+>                       $editedPenult
+>                       $editedLast
+>           and to store all four [edited/input minor member] positions for all these [pointed big members of] clusters (24 positions)
+>
+>
+>
+>
+># if ($precedence == 4) or ($precedence == 5) { $cluster = true }, $cluster
+># return $precedence
+>
+>
+>if $precedence == 3 or $precedence == 4 or $precedence == 5 {
+>         if $name == 8 {
+>          if checkSpin $spin, true, 3 {
+>           $sanity = false
+>           $limit = 3
+>           $name = 0
+>           $precedence = 0
+>           $subScripted = true
+>           }
+>           else { $limit = 3 - checkSpin $spin, false, 3 }#to check reaction to an overflow --irulan
+>          }
+>          else {
+>            if checkSpin $spin, true, 1 {
+>             $sanity = false
+>             $limit = 3
+>             $precedence = 0
+>             $superScripted = true
+>             }
+>             else { $limit = 3 - checkSpin $spin, false, 1 }
+>            }
+>         }#poor style oh .now fixing --irulan (moved between functions)#
+>         else {
+>           if $precedence == 6 {}
+>           }
+>
+>        if not $sanity {# ************************* 'still‑in' flag
+>         $sanity = true
+>         if $first { $first = false }
+>         if $hold { $hold = false }
+>         }
+>
+>
+>
+># 
+># if not $editLineMode and $name and $bundleLenght {# { $editMode = true }
+># }
+>#
+>
+>                      $space = false
+>                      $newline = true
+>                      }# end of a hole in a code
+>                      else {#5
+>                        if $precedence == 6 {
+>#
+>#                         if not $first and not $hold {
+>#                          $foreScripted = false
+>#                          $newline = false
+>#                          }
+>                           }#6
+>
+>
+>
+>
+>#learn inheritedProperties $precedence, $foreScripted, $afterScripted, $superScripted, $subScripted, $space, $newline, $fork, $appearance {}
+>#
+>#learn clusterInheritance $pattern, $precedence {}
+>#
+>
+>
+>
+>                $foreScripted = true
+>                $newline = false
+>                }#
+>                else {#3
+>                  if $precedence == 4 {
+>                   $afterScripted = true
+>                   $foreScripted = false
+>                   }
+>                   else {#4
+>                     if $precedence == 4 and ($foreScripted or $afterScripted) {
+>
+>                         #else {#5
+>                        #}#5
+>                     }#4
+>                  }#3
+>
+>
+>                           if $precedence == 1 and ($foreScripted or $afterScripted) {#*
+>                            $internalName = subcaller true#
+>                            $precedence = 0
+>ccl dir 180 fw 10 dir 0 print "branch 1" wait 4
+>                            if $internalName == 20 {
+>                             $superScripted = true
+>                             if $foreScripted {
+>                              if checkSpin $spin, true, 1 {
+>                               $sanity = false
+>                               $limit = 3
+>                               }
+>                               else { $limit = 3 - checkSpin $spin, false, 1 }
+>                              }
+>                              else {
+>                                if checkSpin $spin, true, 5 {
+>                                 $sanity = false
+>                                 $limit = 3
+>                                 }
+>                                 else { $limit = 3 - checkSpin $spin, false, 5 }
+>                                }
+>                             }#20_--jera
+>                             else {
+>                               if $internalName == 8 {
+>                                $subScripted = true
+>                                if $foreScripted {
+>                                 if checkSpin $spin, true, 3 {
+>                                  $sanity = false
+>                                  $limit = 3
+>                                  }
+>                                  else { $limit = 3 - checkSpin $spin, false, 3 }
+>                                 }
+>                                 else {
+>                                   if checkSpin $spin, true, 7 {
+>                                    $sanity = false
+>                                    $limit = 3
+>                                    }
+>                                    else { $limit = 3 - checkSpin $spin, false, 7 }
+>                                   }
+>                                }#8_--algiz and $afterScripted
+>                                else {
+>                                  if $sanity {#* i guess is wrong or insufficient; fixed --irulan
+>                                   $appearanceL = $appearance
+>                                   $forkL = $fork
+>                                   while $internalName {
+>                                        if $internalName == 6 {
+>                                         $appearanceL = not $appearanceL
+>                                         }#6_--othila
+>                                         else {
+>                                           if $internalName == 16 {
+>                                            $forkL = $forkL + 1
+>                                            if $forkL == 4 { $forkL = 0 }
+>                                            }#16_--fehu
+>                                           }
+>                                        $internalName = subcaller false
+>                                        }#|* moved it into loop *|
+>                                          #do not forget to make a call to drawing function; beware of global variables |* and i missed $spin in checkSpin $spin, back then... oh --irulan [learn checkSpin [$spin,[?]] $reason, $address {}] *| maybe it was usable without that but a readability is improved
+>                                   $appearance = $appearanceL
+>                                   $fork = $forkL
+>                                   return 6
+>                                   }#
+>                                  }#
+>                               }
+>                            }
+>#
+>
+>#                         if $internalName { $precedence = 1 } # maybe is a hole in a head
+>
+>
+>
+>
+>
+>
 >
 >```
