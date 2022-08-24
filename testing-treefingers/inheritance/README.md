@@ -7,7 +7,7 @@
 2. Each branching point requires evaluation of a complex expression.
 3. Switching between different modes requires modifying many variables, which all can easily lead to inconsistencies.'
 - so i firstly need to understand if that is the point[^2]. nevertheless i provide my test module[^3] here [after 'citation0']
-###### citation0
+###### citation0[^4]
 >```
 >The Embedded Angle
 >Miro Samek 'Who has moved my state?'
@@ -1059,3 +1059,4 @@
 [^1]: after i am with my mindset being cleared after the opinion of linus and other kernel developers i have disagreed with miro on the matter of his adherence to C++ theoretics' guidelines --namely unnecessary introduction of `classes` into category of `primitives`
 [^2]: i suppose my code and my coding style in general cannot be objects for such critic. firstly we do not have `types` in turtleSpeak; next we do not have anything evolved like structs tables arrays lists vectors and so on; and finally --all miro's stances on usage  of pointers are meaningless for a language accepting ONLY ALGORITHMICAL SOLUTIONS to programming tasks!!!
 [^3]: i cannot get into the flow yet but maybe my design cannot be compared to `MS Calculator` --even more --i cannot recollect i saw anything like this while learning from other programmers; my style is strongly influenced by Assembly not Microsoft's coding styles or Stroustrup's creation
+[^4]: i use modern systems nowadays and A HUGE PART of them is made using event‑driven programming (i just know that instinctively) —i may safely assert that event‑driven programming is no more effective than procedural one and that in fact IT IS EVEN MUCH WORSE! systems get unreliable and slow because of ill‑thought design encouraged by oversimplified approach of event‑driven programming ...and it is mostly done with RADs or frameworks producing junk code
